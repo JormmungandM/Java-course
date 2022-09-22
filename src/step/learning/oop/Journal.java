@@ -1,6 +1,8 @@
 package step.learning.oop;
 
-public class Journal extends Literature {
+public class Journal
+        extends Literature
+        implements Periodic,Printable {
     private Integer number;
 
 
