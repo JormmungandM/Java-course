@@ -1,7 +1,9 @@
 package step.learning.oop;
 
+import java.io.Serializable;
+
 public class Hologram
-        extends Literature {
+        extends Literature implements Serializable {
 
     public Hologram setTitle(String Title){
         return (Hologram) super.setTitle(Title);
@@ -9,7 +11,7 @@ public class Hologram
 
     @Override
     public void print() {
-
+        System.out.printf( "Hologram. Title: %s%n", super.getTitle() ) ;
     }
 
 }

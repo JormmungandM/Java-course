@@ -1,6 +1,7 @@
 package step.learning.oop;
 
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,7 +9,7 @@ import java.util.Date;
 
 public class Newspaper
         extends Literature
-        implements Periodic, Printable {
+        implements Periodic, Printable, Serializable {
     private Date date;
     private Calendar calendar;
     static private final SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");

@@ -1,6 +1,8 @@
 package step.learning;
 
-public class ConsoleColors {
+import java.io.Serializable;
+
+public class ConsoleColors implements Serializable {
     public static final String RESET = "\033[0m";  // Text Reset
 
     // Regular Colors
