@@ -12,10 +12,7 @@ import java.io.File;
 import java.lang.reflect.AnnotatedArrayType;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -50,56 +47,67 @@ public class Main {
             if(theClass.isAnnotationPresent(DemoClass.class)){
                 demoClasses.add(theClass);
             }
-
-            //System.out.println(className);
         }
 
+        // Sort demoClasses with Comparator
+        demoClasses.sort(new Comparator<>() {
+            public int compare(Class<?> o1, Class<?> o2) {
+                return Integer.compare(     // The Integer.compare(x, y) returns -1 if x is less than y, 0 if they're equal, and 1 otherwise
+                        o1.getAnnotation(DemoClass.class).priority(),
+                        o2.getAnnotation(DemoClass.class).priority()
+                        * -1 );     // I multiply by -1 so that those who have more priority are higher
+            }
+        });
 
-        System.out.println( "Demo classes: " );
-        int i = 1;
-        for (Class<?> theClass : demoClasses){
-            System.out.printf("%d. %s %n",i++,theClass.getName());
-        }
-        System.out.println("0. Exit");
-        System.out.print( "Make your choice: ");
-
-
-        Scanner kbScanner = new Scanner(System.in);
-        int userChoice = -1;
-        try{
-            userChoice = kbScanner.nextInt();
-        } catch (InputMismatchException ignored){
-            System.out.println( "Incorrect choice" );
-        }
-
-        if(userChoice == 0){
-            System.out.println( "Bye" );
-            return;
-        }
-        int index = userChoice -1;
-        if(index >= demoClasses.size() || index < 0) {
-            System.out.println( "Incorrect choice" );
-        }
-        else {
-            Class<?> execClass = demoClasses.get(index);
-            Method[] methods = execClass.getDeclaredMethods();
-            for(Method method: methods)
-            {
-                if(method.isAnnotationPresent(EntryPoint.class)){
-                    try{
-                        method.invoke( execClass.getDeclaredConstructor().newInstance() );
+        int userChoice;
+        do {
+            System.out.println(ConsoleColors.RED_BOLD + "Demo classes: ");
+            int i = 1;
+            for (Class<?> theClass : demoClasses){
+                System.out.printf("%d. %s %n",i++,theClass.getName());
+            }
+            System.out.println("0. Exit");
+            System.out.print( "Make your choice: ");
+            Scanner kbScanner = new Scanner(System.in);
+            userChoice = -1;
+            try{
+                userChoice = kbScanner.nextInt();
+            } catch (InputMismatchException ignored){
+                System.out.println( "Incorrect choice" );
+            }
+            System.out.println(ConsoleColors.RESET + "-------------------------------");
+            if(userChoice == 0){
+                System.out.println( "Bye" );
+                System.out.println("-------------------------------");
+                return;
+            }
+            int index = userChoice -1;
+            if(index >= demoClasses.size() || index < 0) {
+                System.out.println( "Incorrect choice" );
+            }
+            else {
+                List<Object> objects = new ArrayList<>();   // list of class object stores that have been started previously
+                Class<?> execClass = demoClasses.get(index);
+                Method[] methods = execClass.getDeclaredMethods();
+                for(Method method: methods){
+                    if(method.isAnnotationPresent(EntryPoint.class)){
+                        try{
+                            method.invoke(getClassObject(objects, execClass));  // the method returns the required class object
+                        }
+                        catch (Exception ex){
+                            System.out.println( "Execution error: " + ex.getMessage() );
+                        }
                     }
-                    catch (Exception ex){
-                        System.out.println( "Execution error: " + ex.getMessage() );
+                    else {
+                        System.out.println("\"Entry point\" missing");
                     }
                 }
             }
-        }
+            System.out.println("-------------------------------");
+        }while(true);
 
 
-        // System.out.println( "Choice: " + userChoice);
-
-        // region  Run()
+        // region  Runs
         // new DataTypes().run();
         // new Complex().run();
         // new Dictionary().run();
@@ -112,9 +120,32 @@ public class Main {
     }
 
 
+    private static Object getClassObject(List<Object> list, Class<?> obj_)
+    {
+        Object temp;
+        try{
+
+            if(!list.isEmpty()){
+                for(Object obj : list){
+                    if(obj.getClass() == obj_){     // checks if this object has already been created then returns
+                        return obj;
+                    }
+                }
+            }
+
+            // if the class was called for the first time
+            temp = obj_.getDeclaredConstructor().newInstance();   // temporarily an object to avoid reusing newInstance
+            list.add(temp);                                       // adding to the list
+            return temp;
+        }
+        catch (Exception ex){
+            System.out.println( "Execution error: " + ex.getMessage() );
+            return null;
+        }
+    }
+
     private  static List<String> getClassNames(String packageName)
     {
-
 
         // Class loader
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
