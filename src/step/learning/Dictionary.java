@@ -1,7 +1,11 @@
 package step.learning;
 
+import step.learning.anno.DemoClass;
+import step.learning.anno.EntryPoint;
+
 import java.util.*;
 
+@DemoClass
 public class Dictionary {
 
     Map<String, String> map;
@@ -15,7 +19,8 @@ public class Dictionary {
         map.put("Hi", "Привіт");
     }
 
-    public void Run()
+    @EntryPoint
+    public void run()
     {
         System.out.print("""
                 Англо-Украинский словарь
@@ -51,7 +56,7 @@ public class Dictionary {
             default:
                 System.out.print("Ошибка ввода\n\n");
         }
-        Run();
+        run();
     }
 
     public void All_Word(){

@@ -1,11 +1,14 @@
 package step.learning.oop;
 
 import step.learning.ConsoleColors;
+import step.learning.anno.DemoClass;
+import step.learning.anno.EntryPoint;
 
 import java.io.*;
 import java.text.ParseException;
 import java.util.*; // import all utils
 
+@DemoClass
 public class Library implements Serializable {
     private final List<Literature> funds ; // this list contains all the literatures (book, journal and newspaper)
 
@@ -139,7 +142,8 @@ public class Library implements Serializable {
         }
     }
 
-    public void Run() {
+    @EntryPoint
+    public void run() {
         // serializeFunds();    // serialize only once
         deserializeFunds();     // every run deserialize
 

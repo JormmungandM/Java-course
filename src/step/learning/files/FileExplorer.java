@@ -1,6 +1,9 @@
 package step.learning.files;
 
 // some modules to work
+import step.learning.anno.DemoClass;
+import step.learning.anno.EntryPoint;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,9 +11,11 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+@DemoClass
 public class FileExplorer {
 
     private final StringBuilder path = new StringBuilder(); // this path is used for interface and for cdMethod
+   @EntryPoint
     public void run()
     {
         cdMethod("."); // show directory before work

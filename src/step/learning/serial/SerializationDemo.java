@@ -1,12 +1,16 @@
 package step.learning.serial;
 
+import step.learning.anno.DemoClass;
+import step.learning.anno.EntryPoint;
+
 import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.*;
 
+@DemoClass
 public class SerializationDemo implements Serializable {
 
-
+    @EntryPoint
     public void run()
     {
         serializeList();

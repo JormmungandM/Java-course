@@ -1,21 +1,12 @@
 package step.learning;
 
-/*
-Java: Типы данных
-Основной единицей данных является класс.
-Важно!! Классы и пакеты строго именуются:
- - пакет (package) называет также как и папка (CaseSensitive)
-    рекомендуется lowercase
- - класс называется как и файл (CaseSensitive)
-    рекомендуется CapitalCamelCase
-    = В одном файле - один класс (public)
-       Несколько классов могут быть в одном файле, если
-       они а) private, б) внутренние (класс в классе)
-    = Класс нельзя разделить на несколько файлов
- */
+import step.learning.anno.DemoClass;
+import step.learning.anno.EntryPoint;
 
+@DemoClass
 public class DataTypes {
-    public void  Run ()
+    @EntryPoint
+    public void  run ()
     {
         // Primitives - value types
         byte bx = -100;         // В Java все числовые типы - знаковые
@@ -39,5 +30,6 @@ public class DataTypes {
         System.out.println(ConsoleColors.BLUE_BOLD + dx + ConsoleColors.YELLOW_BOLD + "\t\t (double)");
         System.out.println(ConsoleColors.BLUE_BOLD + c + ConsoleColors.YELLOW_BOLD + "\t\t\t (char)");
         System.out.println(ConsoleColors.BLUE_BOLD + b + ConsoleColors.YELLOW_BOLD + "\t\t (boolean)");
+        System.out.print(ConsoleColors.RESET);
     }
 }

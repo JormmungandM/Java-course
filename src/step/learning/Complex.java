@@ -1,7 +1,11 @@
 package step.learning;
 
+import step.learning.anno.DemoClass;
+import step.learning.anno.EntryPoint;
+
 import java.util.*;
 
+@DemoClass
 public class Complex {
 
     public Complex(){
@@ -99,7 +103,8 @@ public class Complex {
 
     }
 
-    public void  Run()
+    @EntryPoint
+    public void  run()
     {
         arraysDemo();
         collectionsDemo();
