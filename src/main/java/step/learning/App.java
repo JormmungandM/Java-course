@@ -31,7 +31,7 @@ public class App {
     @Inject @Named("OracleConnectionString")
     private String OracleConnectionString;
 
-    public void run(){
+    public void runMenu(){
         System.out.println( "IoC Demo" );
         System.out.println( "StringService: " + stringService.getString() );
         System.out.println( "RandomProvider: " + randomProvider.getN() );
@@ -41,7 +41,7 @@ public class App {
         System.out.println( "OracleConnectionString -> " + OracleConnectionString );
     }
 
-    public void runMenu() {
+    public void run() {
 
         // Definition of the current class
         Class<?> currentClass = Main.class;
