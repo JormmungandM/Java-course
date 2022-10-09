@@ -1,25 +1,47 @@
 package step.learning;
 
-import step.learning.anno.AnnotationsDemo;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import step.learning.anno.DemoClass;
 import step.learning.anno.EntryPoint;
-import step.learning.files.FileExplorer;
-import step.learning.files.FilesDemo;
-import step.learning.oop.Library;
-import step.learning.serial.SerializationDemo;
+import step.learning.services.RandomProvider;
+import step.learning.services.StringService;
+import step.learning.services.hash.HashService;
 
 import java.io.File;
-import java.lang.reflect.AnnotatedArrayType;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.*;
 
-public class Main {
+public class App {
 
+    @Inject
+    StringService stringService;
+    @Inject @Named("ten")
+    RandomProvider randomProvider;
 
+    @Inject @Named("128")
+    private HashService hash128;
+    @Inject @Named("160")
+    private HashService hash160;
 
+    @Inject @Named("MsConnectionString")
+    private String MsConnectionString;
 
-    public static void main(String[] args) {
+    @Inject @Named("OracleConnectionString")
+    private String OracleConnectionString;
+
+    public void run(){
+        System.out.println( "IoC Demo" );
+        System.out.println( "StringService: " + stringService.getString() );
+        System.out.println( "RandomProvider: " + randomProvider.getN() );
+        System.out.println( "HashService (128bit): " + hash128.hash("Hello") );
+        System.out.println( "HashService (160bit): " + hash160.hash("Hello") );
+        System.out.println( "MsConnectionString -> " + MsConnectionString );
+        System.out.println( "OracleConnectionString -> " + OracleConnectionString );
+    }
+
+    public void runMenu() {
 
         // Definition of the current class
         Class<?> currentClass = Main.class;
@@ -55,7 +77,7 @@ public class Main {
                 return Integer.compare(     // The Integer.compare(x, y) returns -1 if x is less than y, 0 if they're equal, and 1 otherwise
                         o1.getAnnotation(DemoClass.class).priority(),
                         o2.getAnnotation(DemoClass.class).priority()
-                        * -1 );     // I multiply by -1 so that those who have more priority are higher
+                                * -1 );     // I multiply by -1 so that those who have more priority are higher
             }
         });
 
