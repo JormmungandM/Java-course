@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import step.learning.anno.DemoClass;
 import step.learning.anno.EntryPoint;
+import step.learning.services.DataTimeService;
 import step.learning.services.RandomProvider;
 import step.learning.services.StringService;
 import step.learning.services.hash.HashService;
@@ -31,7 +32,11 @@ public class App {
     @Inject @Named("OracleConnectionString")
     private String OracleConnectionString;
 
-    public void runMenu(){
+    @Inject
+    private DataTimeService dataTimeService;
+
+    public void run(){
+        // region classwork
         System.out.println( "IoC Demo" );
         System.out.println( "StringService: " + stringService.getString() );
         System.out.println( "RandomProvider: " + randomProvider.getN() );
@@ -39,9 +44,13 @@ public class App {
         System.out.println( "HashService (160bit): " + hash160.hash("Hello") );
         System.out.println( "MsConnectionString -> " + MsConnectionString );
         System.out.println( "OracleConnectionString -> " + OracleConnectionString );
+        // endregion
+
+        System.out.println( "Date: " + dataTimeService.getDate());
+        System.out.println( "Time: " + dataTimeService.getTime() );
     }
 
-    public void run() {
+    public void runMenu() {
 
         // Definition of the current class
         Class<?> currentClass = Main.class;

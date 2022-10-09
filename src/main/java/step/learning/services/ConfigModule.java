@@ -15,13 +15,15 @@ public class ConfigModule extends AbstractModule {
         bind(HashService.class).annotatedWith(Names.named("128")).to(MD5HashService.class);
         bind(HashService.class).annotatedWith(Names.named("160")).to(Sha1HashService.class);
 
-
         bind(String.class)
                 .annotatedWith(Names.named("MsConnectionString"))
                 .toInstance("MsConnectionString");
         bind(String.class)
                 .annotatedWith(Names.named("OracleConnectionString"))
                 .toInstance("OracleConnectionString");
+
+        bind(DataTimeService.class).to(DataTime.class); // binding
+
     }
 
     @Provides  @Named("max")
@@ -34,8 +36,4 @@ public class ConfigModule extends AbstractModule {
         return new RandomProviderTen();
     }
 
-
-    public static interface MsConnectionService {
-
-    }
 }
