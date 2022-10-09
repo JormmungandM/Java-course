@@ -5,8 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class DataTime
-        implements DataTimeService {    // использует интерфейс DataTimeService
+public class DataTime{
 
     public String getDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");   // pattern for date

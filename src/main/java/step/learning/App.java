@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import step.learning.anno.DemoClass;
 import step.learning.anno.EntryPoint;
-import step.learning.services.DataTimeService;
+import step.learning.services.DataTime;
 import step.learning.services.RandomProvider;
 import step.learning.services.StringService;
 import step.learning.services.hash.HashService;
@@ -33,7 +33,7 @@ public class App {
     private String OracleConnectionString;
 
     @Inject
-    private DataTimeService dataTimeService;
+    private DataTime dataTimeService;
 
     public void run(){
         // region classwork

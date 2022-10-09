@@ -22,8 +22,6 @@ public class ConfigModule extends AbstractModule {
                 .annotatedWith(Names.named("OracleConnectionString"))
                 .toInstance("OracleConnectionString");
 
-        bind(DataTimeService.class).to(DataTime.class); // binding
-
     }
 
     @Provides  @Named("max")
