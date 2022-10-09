@@ -16,24 +16,30 @@ import java.util.*;
 
 public class App {
 
-    @Inject
-    StringService stringService;
-    @Inject @Named("ten")
-    RandomProvider randomProvider;
-
-    @Inject @Named("128")
-    private HashService hash128;
-    @Inject @Named("160")
-    private HashService hash160;
-
     @Inject @Named("MsConnectionString")
     private String MsConnectionString;
 
     @Inject @Named("OracleConnectionString")
     private String OracleConnectionString;
 
-    @Inject
-    private DataTime dataTimeService;
+    private final StringService stringService;
+    private final RandomProvider randomProvider;
+    private final HashService hash128;
+    private final HashService hash160;
+    private final DataTime dataTimeService;
+
+    @Inject     // injection through constructor
+    public App(@Named("ten") RandomProvider randomProvider,
+               @Named("128") HashService hash128,
+               @Named("160") HashService hash160,
+               DataTime dataTimeService,
+               StringService stringService){
+        this.randomProvider = randomProvider;
+        this.hash128 = hash128;
+        this.hash160 = hash160;
+        this.dataTimeService = dataTimeService;
+        this.stringService = stringService;
+    }
 
     public void run(){
         // region classwork
